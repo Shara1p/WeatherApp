@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentPage
+    x:Class="WeatherApp.View.LocationsListView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:model="clr-namespace:WeatherApp.Model"
+    xmlns:viewmodel="clr-namespace:WeatherApp.ViewModel"
+    x:DataType="viewmodel:LocationsListViewModel"
+    Shell.NavBarIsVisible="False">
+
+
+    <VerticalStackLayout BackgroundColor="#6DCD9F">
+
+        <HorizontalStackLayout>
+            <Button
+                BackgroundColor="Transparent"
+                Command="{Binding goBackCommand}"
+                ImageSource="arrow.png"
+                VerticalOptions="Center" />
+
+            <SearchBar
+                x:Name="SearchLocations"
+                Margin="0,10,0,10"
+                FontFamily="Inter"
+                HorizontalOptions="Center"
+                SearchCommand="{Binding addLocationCommand}"
+                SearchCommandParameter="{Binding Text, Source={x:Reference SearchLocations}}"
+                VerticalOptions="Center" />
+        </HorizontalStackLayout>
+
+        <CollectionView HeightRequest="700" ItemsSource="{Binding mainWeatherList}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <SwipeView>
+                        <SwipeView.RightItems>
+                            <SwipeItems Mode="Reveal">
+                                <SwipeItem
+                                    BackgroundColor="Transparent"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:LocationsListViewModel}}, Path=removeLocationCommand}"
+                                    CommandParameter="{Binding Source={RelativeSource Self}, Path=BindingContext}"
+                                    IconImageSource="trashbin.png" />
+                            </SwipeItems>
+                        </SwipeView.RightItems>
+                        <Frame
+                            Margin="10,0,10,10"
+                            x:DataType="model:MainWeather"
+                            BackgroundColor="#ABE6CA"
+                            CornerRadius="20"
+                            HeightRequest="100">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:LocationsListViewModel}}, Path=goToMainPageCommand}" CommandParameter="{Binding .}" />
+                            </Frame.GestureRecognizers>
+                            <Grid ColumnDefinitions="*,Auto,*" RowDefinitions="*,*">
+
+                                <Image
+                                    Grid.RowSpan="2"
+                                    Grid.Column="0"
+                                    HeightRequest="75"
+                                    HorizontalOptions="Start"
+                                    Source="{Binding WeatherIcon}" />
+                                <Label
+                                    Grid.Column="1"
+                                    FontFamily="Inter"
+                                    FontSize="18"
+                                    HorizontalOptions="Center"
+                                    Text="{Binding CityName}"
+                                    VerticalOptions="Center" />
+                                <Label
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    FontAttributes="Bold"
+                                    FontFamily="Inter"
+                                    FontSize="15"
+                                    HorizontalOptions="Center"
+                                    Text="{Binding Country}"
+                                    VerticalOptions="Center" />
+                                <Label
+                                    Grid.RowSpan="2"
+                                    Grid.Column="2"
+                                    Margin="0,0,10,0"
+                                    FontAttributes="Bold"
+                                    FontFamily="Inter"
+                                    HorizontalOptions="End"
+                                    Text="{Binding TempC, StringFormat='{0} °C'}"
+                                    VerticalOptions="Center" />
+                            </Grid>
+                        </Frame>
+                    </SwipeView>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </VerticalStackLayout>
+</ContentPage>

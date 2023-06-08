@@ -1,0 +1,251 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="WeatherApp.View.MainPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:model="clr-namespace:WeatherApp.Model"
+    xmlns:viewmodel="clr-namespace:WeatherApp.ViewModel"
+    x:DataType="viewmodel:WeatherViewModel">
+
+
+    <VerticalStackLayout BackgroundColor="#6DCD9F">
+
+        <VerticalStackLayout Margin="0,15,0,0">
+            <Label
+                FontAttributes="Bold"
+                FontFamily="Inter"
+                FontSize="25"
+                HorizontalOptions="Center"
+                Text="{Binding MainWeather.CityName}" />
+
+            <Label
+                FontFamily="Inter"
+                FontSize="20"
+                HorizontalOptions="Center"
+                Text="{Binding MainWeather.Country}" />
+
+            <Label
+                Margin="0,0,0,20"
+                FontFamily="Inter"
+                FontSize="18"
+                HorizontalOptions="Center"
+                Text="{Binding MainWeather.Date}" />
+
+
+        </VerticalStackLayout>
+
+        <Grid
+            Margin="0,0,0,10"
+            ColumnDefinitions="*,*"
+            RowDefinitions="*,*">
+            <Image
+                Grid.RowSpan="2"
+                Grid.Column="0"
+                HeightRequest="100"
+                Source="{Binding MainWeather.WeatherIcon}"
+                VerticalOptions="Center" />
+            <Label
+                Grid.Column="1"
+                Margin="0,0,20,0"
+                FontFamily="Inter"
+                FontSize="50"
+                HorizontalOptions="End"
+                Text="{Binding MainWeather.TempC, StringFormat='{0}°C'}"
+                VerticalOptions="Center" />
+            <Label
+                Grid.Row="1"
+                Grid.Column="1"
+                FontFamily="Inter"
+                FontSize="18"
+                HorizontalOptions="Center"
+                Text="{Binding MainWeather.WeatherDescription}"
+                VerticalOptions="Start" />
+        </Grid>
+
+        <Grid
+            Margin="10,0,10,0"
+            RowDefinitions="80, 80, 80, 80"
+            RowSpacing="10">
+            <Frame
+                Grid.Row="0"
+                BackgroundColor="#ABE6CA"
+                CornerRadius="20">
+                <Grid Margin="0,0,15,0" ColumnDefinitions="Auto, *, *">
+                    <Image HeightRequest="70" Source="feelslike.png" />
+                    <HorizontalStackLayout
+                        Grid.Column="1"
+                        Spacing="10"
+                        VerticalOptions="Center">
+                        <Label
+                            FontFamily="Inter"
+                            FontSize="18"
+                            Text="Feels like" />
+                    </HorizontalStackLayout>
+
+                    <Label
+                        Grid.Column="2"
+                        FontFamily="Inter"
+                        FontSize="18"
+                        HorizontalOptions="End"
+                        Text="{Binding MainWeather.TempFeelsLikeC, StringFormat='{0} °C'}"
+                        VerticalOptions="Center" />
+
+                </Grid>
+            </Frame>
+
+            <Frame
+                Grid.Row="1"
+                BackgroundColor="#ABE6CA"
+                CornerRadius="20">
+                <Grid Margin="0,0,15,0" ColumnDefinitions="Auto, *, *">
+                    <Image HeightRequest="70" Source="wind.png" />
+                    <HorizontalStackLayout
+                        Grid.Column="1"
+                        Spacing="10"
+                        VerticalOptions="Center">
+                        <Label
+                            FontFamily="Inter"
+                            FontSize="18"
+                            Text="Wind" />
+                    </HorizontalStackLayout>
+
+                    <Label
+                        Grid.Column="2"
+                        FontFamily="Inter"
+                        FontSize="18"
+                        HorizontalOptions="End"
+                        Text="{Binding MainWeather.WindSpeed, StringFormat='{0} km/h'}"
+                        VerticalOptions="Center" />
+                </Grid>
+            </Frame>
+
+            <Frame
+                Grid.Row="2"
+                BackgroundColor="#ABE6CA"
+                CornerRadius="20">
+                <Grid Margin="0,0,15,0" ColumnDefinitions="Auto, *, *">
+                    <Image HeightRequest="70" Source="humidity.png" />
+                    <HorizontalStackLayout
+                        Grid.Column="1"
+                        Spacing="10"
+                        VerticalOptions="Center">
+                        <Label
+                            FontFamily="Inter"
+                            FontSize="18"
+                            Text="Humidity" />
+                    </HorizontalStackLayout>
+
+                    <Label
+                        Grid.Column="2"
+                        FontFamily="Inter"
+                        FontSize="18"
+                        HorizontalOptions="End"
+                        Text="{Binding MainWeather.Humidity, StringFormat='{0} %'}"
+                        VerticalOptions="Center" />
+
+                </Grid>
+            </Frame>
+
+            <Frame
+                Grid.Row="3"
+                BackgroundColor="#ABE6CA"
+                CornerRadius="20">
+                <Grid Margin="0,0,15,0" ColumnDefinitions="Auto, *, *">
+                    <Image HeightRequest="70" Source="waterfall.png" />
+                    <HorizontalStackLayout
+                        Grid.Column="1"
+                        Spacing="10"
+                        VerticalOptions="Center">
+                        <Label
+                            FontFamily="Inter"
+                            FontSize="18"
+                            Text="Rainfall" />
+                    </HorizontalStackLayout>
+
+                    <Label
+                        Grid.Column="2"
+                        FontFamily="Inter"
+                        FontSize="18"
+                        HorizontalOptions="End"
+                        Text="{Binding MainWeather.WaterFall, StringFormat='{0} mm'}"
+                        VerticalOptions="Center" />
+
+                </Grid>
+            </Frame>
+
+        </Grid>
+
+        <Grid ColumnDefinitions="Auto,*">
+            <Button
+                Grid.Column="0"
+                Margin="10"
+                BackgroundColor="#ABE6CA"
+                Command="{Binding GoToWeekForecastCommand}"
+                CornerRadius="20"
+                FontAttributes="Bold"
+                FontFamily="Inter"
+                FontSize="15"
+                HorizontalOptions="Center"
+                ImageSource="list.png"
+                IsEnabled="{Binding IsNotBusy}"
+                Text="Next 7 days &gt; "
+                TextColor="Black" />
+
+            <Button
+                Grid.Column="1"
+                Margin="10"
+                BackgroundColor="#ABE6CA"
+                Command="{Binding GoToLocationsListCommand}"
+                CornerRadius="20"
+                FontAttributes="Bold"
+                FontFamily="Inter"
+                FontSize="15"
+                HorizontalOptions="End"
+                ImageSource="list.png"
+                Text="Locations &gt;"
+                TextColor="Black" />
+        </Grid>
+
+
+
+        <CollectionView
+            ItemsLayout="HorizontalList"
+            ItemsSource="{Binding MainWeather.HourForecast}"
+            SelectionMode="None">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame
+                        Margin="5"
+                        x:DataType="model:HourForecast"
+                        BackgroundColor="#ABE6CA"
+                        CornerRadius="40"
+                        HeightRequest="130"
+                        WidthRequest="85">
+                        <VerticalStackLayout>
+                            <Label
+                                FontFamily="Inter"
+                                HorizontalOptions="Center"
+                                Text="{Binding Hour}"
+                                VerticalOptions="Start" />
+                            <Image
+                                HeightRequest="50"
+                                HorizontalOptions="Center"
+                                Source="{Binding HourIcon}"
+                                VerticalOptions="Center"
+                                WidthRequest="85" />
+                            <Label
+                                FontAttributes="Bold"
+                                FontFamily="Inter"
+                                HorizontalOptions="Center"
+                                Text="{Binding TempC, StringFormat='{0}°C'}"
+                                VerticalOptions="End" />
+                        </VerticalStackLayout>
+
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+
+        </CollectionView>
+
+    </VerticalStackLayout>
+</ContentPage>

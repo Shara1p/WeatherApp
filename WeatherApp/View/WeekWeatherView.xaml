@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    x:Class="WeatherApp.View.WeekWeatherView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:model="clr-namespace:WeatherApp.Model"
+    xmlns:viewmodel="clr-namespace:WeatherApp.ViewModel"
+    x:DataType="viewmodel:WeekViewModel"
+    Shell.NavBarIsVisible="False">
+
+    <VerticalStackLayout BackgroundColor="#6DCD9F">
+        <Grid ColumnDefinitions="*, *, *">
+            <Button
+                Grid.Column="0"
+                BackgroundColor="Transparent"
+                Command="{Binding goBackCommand}"
+                HorizontalOptions="Start"
+                ImageSource="arrow.png"
+                VerticalOptions="Center" />
+            <Label
+                Grid.Column="1"
+                Margin="0,10,0,10"
+                FontFamily="Inter"
+                FontSize="23"
+                HorizontalOptions="Center"
+                Text="Next 7 days" />
+        </Grid>
+
+        <Grid Margin="0,30,0,0">
+            <CollectionView ItemsSource="{Binding MainWeather.WeekForecast}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame
+                            Margin="10,0,10,10"
+                            x:DataType="model:WeekForecast"
+                            BackgroundColor="#ABE6CA"
+                            CornerRadius="20"
+                            HeightRequest="90">
+                            <Grid ColumnDefinitions="*,*,*" RowDefinitions="*,*">
+                                <Image
+                                    Grid.RowSpan="2"
+                                    Grid.Column="0"
+                                    HeightRequest="65"
+                                    HorizontalOptions="Center"
+                                    Source="{Binding WeatherIcon}"
+                                    VerticalOptions="Center" />
+                                <Label
+                                    Grid.Column="1"
+                                    FontFamily="Inter"
+                                    FontSize="15"
+                                    HorizontalOptions="Center"
+                                    Text="{Binding Mintemp_c, StringFormat='{0} °C - min'}"
+                                    VerticalOptions="Center" />
+                                <Label
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    FontFamily="Inter"
+                                    FontSize="15"
+                                    HorizontalOptions="Center"
+                                    Text="{Binding Maxtemp_c, StringFormat='{0} °C - max'}"
+                                    VerticalOptions="Center" />
+
+                                <Label
+                                    Grid.RowSpan="2"
+                                    Grid.Column="2"
+                                    FontAttributes="Bold"
+                                    FontFamily="Inter"
+                                    FontSize="15"
+                                    HorizontalOptions="Center"
+                                    Text="{Binding DayOfWeek}"
+                                    VerticalOptions="Center" />
+
+                            </Grid>
+                        </Frame>
+
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
+
+    </VerticalStackLayout>
+</ContentPage>
